@@ -7,14 +7,14 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 ## Aktueller Stand
 
 - Stand: 2026-10-30
-- Branch/Commit: `main` / `964de85`
+- Branch/Commit: `main` / `576e35c`
 - Aktive Aufgabe: Template-Basis und Handoff-Export/Import-Check sind umgesetzt und gemergt.
 - Erledigt:
   - PR #1 gemergt: neutrale Main-Template-Basis (Spec Kit + OpenSpec auswählbar).
   - PR #2 gemergt: Handoff-Export/Import-Check inklusive Wrapper-Regressionstests.
 - Offen: Nächsten inhaltlichen Projektumfang für dieses Repository festlegen.
 - Blocker: keine
-- Letzte Prüfergebnisse: in dieser Sitzung nicht erneut ausgeführt
+- Letzte Prüfergebnisse: `python scripts/check.py` am 2026-10-30 erfolgreich (Dokumentlinks, Pflichtdateien, Dateisyntax; keine projektspezifischen Checks konfiguriert)
 - Nicht synchronisierte Änderungen: keine
 
 ## Nächster Schritt
