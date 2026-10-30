@@ -6,18 +6,20 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 
 ## Aktueller Stand
 
-- Stand: _Datum_
-- Branch/Commit: _nach erstem Commit eintragen_
-- Aktive Aufgabe: Projekt gestartet, noch keine Projektidee erfasst.
-- Erledigt: –
-- Offen: Projektidee beschreiben, SDD-Werkzeug wählen, Architektur freigeben.
+- Stand: 2026-10-30
+- Branch/Commit: `main` / `964de85`
+- Aktive Aufgabe: Template-Basis und Handoff-Export/Import-Check sind umgesetzt und gemergt.
+- Erledigt:
+  - PR #1 gemergt: neutrale Main-Template-Basis (Spec Kit + OpenSpec auswählbar).
+  - PR #2 gemergt: Handoff-Export/Import-Check inklusive Wrapper-Regressionstests.
+- Offen: Nächsten inhaltlichen Projektumfang für dieses Repository festlegen.
 - Blocker: keine
-- Letzte Prüfergebnisse: noch nicht ausgeführt
+- Letzte Prüfergebnisse: in dieser Sitzung nicht erneut ausgeführt
 - Nicht synchronisierte Änderungen: keine
 
 ## Nächster Schritt
 
-Projektidee frei beschreiben; der Agent klärt danach Anforderungen und empfiehlt SDD-Werkzeug und Architektur.
+Nächsten fachlichen/technischen Änderungsumfang festlegen (Issue oder direktes Arbeitspaket), dann per SDD-Ablauf konkretisieren.
 
 ## Entscheidungen und Quellen
 
