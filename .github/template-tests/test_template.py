@@ -18,9 +18,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import projectcfg  # noqa: E402
 
 OFFLINE = os.environ.get("TEMPLATE_TEST_OFFLINE") == "1"
-# Maintenance-only file that must be moved out of the template before the first release.
-EXCLUDE = {"IMPLEMENTIERUNGSVORGABE.md"}
-FORBIDDEN_NEUTRAL = (".specify", "openspec", ".devcontainer", "templates", "profiles", "src")
+FORBIDDEN_NEUTRAL = (".specify", "openspec", ".devcontainer", "templates", "profiles", "src", "IMPLEMENTIERUNGSVORGABE.md")
 
 
 def git(cwd: Path, *args: str) -> str:
@@ -32,7 +30,7 @@ def git(cwd: Path, *args: str) -> str:
 def copy_template(destination: Path) -> Path:
     listing = git(ROOT, "ls-files", "-co", "--exclude-standard", "-z").split("\0")
     for name in filter(None, listing):
-        if name in EXCLUDE or not (ROOT / name).is_file():
+        if not (ROOT / name).is_file():
             continue
         target = destination / name
         target.parent.mkdir(parents=True, exist_ok=True)

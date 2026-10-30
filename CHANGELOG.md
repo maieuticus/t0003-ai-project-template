@@ -4,9 +4,10 @@ Alle wesentlichen Änderungen am Template. Format: [SemVer](https://semver.org/l
 Template wird getrennt vom Generator versioniert. Kategorien: Arbeitsregeln, Specify/Tooling,
 Projektstruktur, Adapter, CI, Sicherheit, Breaking Changes, Migrationshinweise.
 
-## [Unveröffentlicht] – 0.1.0-dev
+## [0.1.0] – 2026-10-30
 
 ### Projektstruktur
+- Die Implementierungsvorgabe liegt auf dem Branch `maintenance` und wird nicht in Projektkopien kopiert.
 - Neutrales Template: README, `AGENTS.md`, `config/project.yaml`, DV-Konzept, Handoff, Quickstarts.
 
 ### Specify/Tooling
