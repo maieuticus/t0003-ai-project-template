@@ -12,6 +12,8 @@ Projektstruktur, Adapter, CI, Sicherheit, Breaking Changes, Migrationshinweise.
 ### Specify/Tooling
 - Wählbar: Spec Kit (gepinnt 1.0.7, Windows-sicherer Python-Wrapper) und OpenSpec (gepinnt 1.15.0).
 - `scripts/sdd.py`, `check.py`, `status.py`, `update_check.py`.
+- `scripts/handoff.py`: Export (kompakt/umfassend, mit Secret-Filter und Commit-Stempel) und
+  `import-check` für externe Rückgaben (nur lesend, weist Abweichungen seit dem Export aus).
 
 ### Adapter
 - `.github/copilot-instructions.md` verweist nur auf `AGENTS.md`.

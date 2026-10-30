@@ -1,7 +1,10 @@
 name: Template-Prüfung
 on:
   push:
+    branches: ["**"]
+    tags: ["v*"]
   pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
