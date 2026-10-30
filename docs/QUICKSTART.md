@@ -46,9 +46,25 @@ den Handoff zu lesen und mit `git status` abzugleichen. Wechsel zwischen Umgebun
 
 ## 6. Mit ChatGPT besprechen
 
-Bitte den Agenten um einen **Export**: kompakt (der Handoff) oder umfassend. Ergebnisse von
-ChatGPT gibst du dem Agenten zurück; er vergleicht sie zuerst mit dem aktuellen Repo und fragt vor
-jeder Übernahme.
+```text
+python scripts/handoff.py export            # kompakt (Handoff); --full für umfassend
+python scripts/handoff.py import-check antwort.md
+```
+
+Der Export liegt in `exports/` (nicht in Git) und trägt den Commit-Stand. Ergebnisse von ChatGPT
+speicherst du als Datei und gibst sie dem Agenten; `import-check` warnt, wenn sich das Repo seit dem
+Export geändert hat, und ändert nichts. Übernommen wird erst nach deiner Freigabe.
+
+## Agenten: was geprüft ist
+
+| Agent | Startdatei | Stand |
+|---|---|---|
+| GitHub Copilot (Chat, CLI) | `.github/copilot-instructions.md` → `AGENTS.md` | Adapter vorhanden; Lesen nicht E2E verifiziert |
+| Codex | `AGENTS.md` | Dateien werden erzeugt (`--integration codex`); Lesen nicht E2E verifiziert |
+| OpenCode, Kimi | `AGENTS.md` | dokumentiert, nicht E2E verifiziert; im Zweifel den Startsatz aus Abschnitt 2 verwenden |
+
+Nur der Startsatz aus Abschnitt 2 ist agentenunabhängig sicher. Auto-Erkennung des Handoffs wird
+nicht behauptet.
 
 ## Grenzen
 

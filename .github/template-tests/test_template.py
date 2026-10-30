@@ -18,9 +18,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import projectcfg  # noqa: E402
 
 OFFLINE = os.environ.get("TEMPLATE_TEST_OFFLINE") == "1"
-# Maintenance-only file that must be moved out of the template before the first release.
-EXCLUDE = {"IMPLEMENTIERUNGSVORGABE.md"}
-FORBIDDEN_NEUTRAL = (".specify", "openspec", ".devcontainer", "templates", "profiles", "src")
+FORBIDDEN_NEUTRAL = (".specify", "openspec", ".devcontainer", "templates", "profiles", "src", "IMPLEMENTIERUNGSVORGABE.md")
 
 
 def git(cwd: Path, *args: str) -> str:
@@ -32,7 +30,7 @@ def git(cwd: Path, *args: str) -> str:
 def copy_template(destination: Path) -> Path:
     listing = git(ROOT, "ls-files", "-co", "--exclude-standard", "-z").split("\0")
     for name in filter(None, listing):
-        if name in EXCLUDE or not (ROOT / name).is_file():
+        if not (ROOT / name).is_file():
             continue
         target = destination / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -122,6 +120,61 @@ class NeutralProject(unittest.TestCase):
         self.assertIn("MAJOR.MINOR.PATCH", result.stderr)
 
 
+class Handoff(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.project = copy_template(Path(self.temp.name) / "project")
+
+    def export(self, *args: str) -> Path:
+        out = self.project / "out.md"
+        run(self.project, "scripts/handoff.py", "export", "--output", str(out), *args, check=True)
+        return out
+
+    def test_initial_handoff_is_valid_and_compact_export_works(self):
+        run(self.project, "scripts/check.py", check=True)
+        text = self.export().read_text(encoding="utf-8")
+        self.assertIn("handoff-export v1 commit=", text)
+        self.assertIn("## Aktueller Stand", text)
+        self.assertNotIn("## Projektmetadaten", text)
+
+    def test_full_export_redacts_secrets_and_includes_specs(self):
+        (self.project / "specs").mkdir()
+        (self.project / "specs/001.md").write_text("# Spec\nSpezifikationstext\n", encoding="utf-8")
+        handoff = self.project / "docs/PROJECT_HANDOFF.md"
+        handoff.write_text(handoff.read_text(encoding="utf-8") + "\npassword: Hunter2Hunter2\n"
+                           "key ghp_abcdefghijklmnopqrstuvwxyz0123456789\n", encoding="utf-8")
+        text = self.export("--full").read_text(encoding="utf-8")
+        self.assertIn("Spezifikationstext", text)
+        self.assertIn("Verbindliche Projektbeschreibung", text)
+        self.assertNotIn("Hunter2Hunter2", text)
+        self.assertNotIn("ghp_abcdefgh", text)
+        self.assertIn("ENTFERNT", text)
+
+    def test_reimport_warns_on_drift_and_changes_nothing(self):
+        exported = self.export("--full")
+        returned = self.project / "returned.md"
+        returned.write_text(exported.read_text(encoding="utf-8") + "\n## Vorschlag\nAnderen Architekturansatz wählen.\n",
+                            encoding="utf-8")
+        (self.project / "docs/DV_KONZEPT.md").write_text("# geändert\n", encoding="utf-8")
+        git(self.project, "add", "-A")
+        git(self.project, "commit", "-qm", "later change")
+        before = {p: p.read_bytes() for p in self.project.rglob("*") if p.is_file() and ".git" not in p.parts}
+        output = run(self.project, "scripts/handoff.py", "import-check", str(returned), check=True).stdout
+        self.assertIn("seit dem Export geändert", output)
+        self.assertIn("docs/DV_KONZEPT.md", output)
+        self.assertIn("Architekturentscheidungen", output)
+        self.assertIn("| Vorschlag | offen |", output)
+        after = {p: p.read_bytes() for p in self.project.rglob("*") if p.is_file() and ".git" not in p.parts}
+        self.assertEqual(before, after)
+
+    def test_reimport_without_stamp_is_flagged(self):
+        returned = self.project / "returned.md"
+        returned.write_text("# Antwort\nEin Vorschlag.\n", encoding="utf-8")
+        output = run(self.project, "scripts/handoff.py", "import-check", str(returned), check=True).stdout
+        self.assertIn("Kein Export-Stempel", output)
+
+
 class UpdateCheck(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -175,6 +228,18 @@ class SelectSdd(unittest.TestCase):
         run(project, "scripts/check.py", check=True)
         return project
 
+    @staticmethod
+    def specify(project: Path, *args: str) -> str:
+        """Run Specify only through the repository wrapper (never specify.exe)."""
+        if os.name == "nt":
+            command = ["powershell", "-NoProfile", "-File", str(project / "scripts/specify.ps1"), *args]
+        else:
+            command = [str(project / "scripts/specify"), *args]
+        result = subprocess.run(command, cwd=project, capture_output=True, text=True, encoding="utf-8", errors="replace")
+        if result.returncode:
+            raise AssertionError(f"{command} failed:\n{result.stdout}\n{result.stderr}")
+        return result.stdout
+
     def test_speckit(self):
         project = self.select("speckit")
         self.assertTrue((project / ".specify/integration.json").is_file())
@@ -182,6 +247,7 @@ class SelectSdd(unittest.TestCase):
         self.assertFalse((project / "openspec").exists())
         self.assertEqual(projectcfg.get(projectcfg.read_text(project / "config/project.yaml"), "sdd", "version"),
                          (ROOT / ".specify-version").read_text().strip())
+        self.assertIn("project-sdd", self.specify(project, "workflow", "info", "project-sdd"))
         again = run(project, "scripts/sdd.py", "select", "speckit")
         self.assertEqual(again.returncode, 1)
         switch = run(project, "scripts/sdd.py", "select", "openspec")
