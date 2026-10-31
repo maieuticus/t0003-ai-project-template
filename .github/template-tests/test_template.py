@@ -80,6 +80,16 @@ class NeutralProject(unittest.TestCase):
             self.assertFalse((self.project / name).exists(), name)
         config = projectcfg.read_text(self.project / "config/project.yaml")
         self.assertIsNone(projectcfg.get(config, "sdd", "tool"))
+        self.assertEqual(projectcfg.checks(config), [])
+
+    def test_ci_runs_template_tests_only_in_template_repository(self):
+        workflow = (self.project / ".github/workflows/ci.yml").read_text(encoding="utf-8")
+        self.assertIn("      - run: python scripts/check.py\n", workflow)
+        self.assertIn(
+            "      - if: github.repository == 'maieuticus/t0003-ai-project-template'\n"
+            "        run: python -m unittest discover -s .github/template-tests -v\n",
+            workflow,
+        )
 
     def test_no_agent_installer_or_privilege_escalation(self):
         for path in self.project.rglob("*"):
@@ -111,6 +121,33 @@ class NeutralProject(unittest.TestCase):
         config.write_text(config.read_text(encoding="utf-8").replace(
             "checks: []", 'checks:\n  - ["python", "-c", "raise SystemExit(3)"]'), encoding="utf-8")
         self.assertEqual(run(failing, "scripts/check.py").returncode, 1)
+
+    def test_derived_project_with_src_and_python_check(self):
+        project = copy_template(Path(self.temp.name) / "derived")
+        package = project / "src/example"
+        package.mkdir(parents=True)
+        (package / "__init__.py").write_text("def add(a, b):\n    return a + b\n", encoding="utf-8")
+        test = project / "src/test_example.py"
+        test.write_text(
+            "import unittest\nfrom example import add\n\n"
+            "class ExampleTest(unittest.TestCase):\n"
+            "    def test_add(self):\n        self.assertEqual(add(1, 2), 3)\n",
+            encoding="utf-8",
+        )
+        config = project / "config/project.yaml"
+        config.write_text(config.read_text(encoding="utf-8").replace(
+            "checks: []", 'checks:\n  - ["python", "-m", "unittest", "discover", "-s", "src"]'),
+            encoding="utf-8")
+
+        result = run(project, "scripts/check.py", check=True)
+        self.assertIn("Prüfung:", result.stdout)
+        self.assertIn("Ran 1 test", result.stderr)
+
+        test.write_text(test.read_text(encoding="utf-8").replace("), 3)", "), 300)"), encoding="utf-8")
+        result = run(project, "scripts/check.py")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("FAIL", result.stderr)
+        run(project, "scripts/check.py", "--static-only", check=True)
 
     def test_openspec_tool_rejects_invalid_pin(self):
         pinned = copy_template(Path(self.temp.name) / "pin")

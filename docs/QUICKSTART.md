@@ -38,6 +38,27 @@ python scripts/status.py                  # Status: Handoff, Git, SDD, Template-
 python scripts/update_check.py            # optional: neuere Template-Version veröffentlicht?
 ```
 
+Nach Architekturfreigabe können Projekte ihre Prüfungen in `config/project.yaml` unter `checks`
+eintragen, je eine JSON-Liste von Argumenten pro Zeile. Beispiel für ein Python-Projekt mit Tests
+unter `src/`:
+
+```yaml
+checks:
+  - ["python", "-m", "unittest", "discover", "-s", "src"]
+```
+
+`check.py` prüft zuerst Dokumente und Syntax und führt danach die konfigurierten Befehle im
+Projektverzeichnis ohne Shell aus; `python` verwendet denselben Interpreter wie `check.py`.
+Ein fehlgeschlagener Check lässt den Aufruf fehlschlagen. Mit `--static-only` werden die
+Projektchecks nicht ausgeführt. Die Konfiguration darf nur vertrauenswürdige Befehle enthalten;
+dieser bestehende Mechanismus ist keine Sandbox.
+
+Die CI führt den Projektcheck unter Linux und Windows in jedem Repository aus. Die zusätzlichen
+Template-Regressionstests mit Neutralitätsannahmen laufen dort nur im Ursprungsrepository
+`maieuticus/t0003-ai-project-template`; Projektkopien können ihre eigenen Tests über `checks`
+konfigurieren. Für die Template-Entwicklung lassen sie sich lokal mit
+`python -m unittest discover -s .github/template-tests -v` starten.
+
 ## 5. Arbeit wieder aufnehmen oder Agent wechseln
 
 Der Agent pflegt `docs/PROJECT_HANDOFF.md` nach wesentlichen Schritten. Neue Sitzung: Agent bitten,

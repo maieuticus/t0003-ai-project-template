@@ -6,20 +6,25 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 
 ## Aktueller Stand
 
-- Stand: 2026-10-30
-- Branch/Commit: `main` / `576e35c`
-- Aktive Aufgabe: Template-Basis und Handoff-Export/Import-Check sind umgesetzt und gemergt.
+- Stand: 2026-10-31
+- Branch/Basis: `feature/derived-project-checks` / `3368240` (aktueller Commit: siehe Git)
+- Aktive Aufgabe: Template für abgeleitete Projekte mit technologieabhängigen Checks vorbereiten.
 - Erledigt:
   - PR #1 gemergt: neutrale Main-Template-Basis (Spec Kit + OpenSpec auswählbar).
   - PR #2 gemergt: Handoff-Export/Import-Check inklusive Wrapper-Regressionstests.
-- Offen: Nächsten inhaltlichen Projektumfang für dieses Repository festlegen.
+  - Projektcheck bleibt in Linux-/Windows-CI allgemein aktiv; Template-Tests mit
+    Neutralitätsannahmen laufen dort nur im t0003-Ursprungsrepository.
+  - Synthetisches Projekt mit `src/` und Python-Check deckt Erfolg und Fehlerweitergabe ab.
+- Offen: PR-Review und GitHub-Actions-Ergebnisse prüfen; kein automatischer Merge.
 - Blocker: keine
-- Letzte Prüfergebnisse: `python scripts/check.py` am 2026-10-30 erfolgreich (Dokumentlinks, Pflichtdateien, Dateisyntax; keine projektspezifischen Checks konfiguriert)
-- Nicht synchronisierte Änderungen: keine
+- Letzte lokale Prüfergebnisse: `python scripts/check.py` und
+  `python -m unittest discover -s .github/template-tests -v` erfolgreich (18 Tests).
+  Linux-/Windows-CI: siehe PR; zum Zeitpunkt dieser Übergabe noch ausstehend.
+- Synchronisierung: siehe Git und PR.
 
 ## Nächster Schritt
 
-Nächsten fachlichen/technischen Änderungsumfang festlegen (Issue oder direktes Arbeitspaket), dann per SDD-Ablauf konkretisieren.
+PR und Linux-/Windows-CI prüfen; anschließend menschliches Review-Gate beachten.
 
 ## Entscheidungen und Quellen
 
@@ -27,4 +32,5 @@ Verweise auf verbindliche Entscheidungen (DV-Konzept, Specs). Hier nichts neu en
 
 ## Probleme
 
-Keine.
+t0004 unterstützt derzeit nur t0003 0.1.0. Neue Template-Version und Kompatibilitätserweiterung
+müssen gesondert abgestimmt werden; kein Release im Rahmen dieser Änderung.

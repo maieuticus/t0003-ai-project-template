@@ -4,6 +4,17 @@ Alle wesentlichen Änderungen am Template. Format: [SemVer](https://semver.org/l
 Template wird getrennt vom Generator versioniert. Kategorien: Arbeitsregeln, Specify/Tooling,
 Projektstruktur, Adapter, CI, Sicherheit, Breaking Changes, Migrationshinweise.
 
+## Unveröffentlicht
+
+### CI
+- Projektchecks laufen weiterhin unter Linux und Windows; die Template-Regressionstests mit
+  Neutralitätsannahmen laufen in GitHub Actions nur im t0003-Ursprungsrepository.
+- Ein synthetisches Projekt mit `src/` und einem Python-Check prüft Erfolg und Fehlerweitergabe.
+
+### Migrationshinweise
+- Kein Release oder Änderung der Template-Version. t0004 unterstützt derzeit nur t0003 0.1.0;
+  eine spätere neue Version und ihre Kompatibilität müssen gesondert abgestimmt werden.
+
 ## [0.1.0] – 2026-10-30
 
 ### Projektstruktur
