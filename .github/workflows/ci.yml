@@ -23,4 +23,5 @@ jobs:
         with:
           node-version: "24"
       - run: python scripts/check.py
-      - run: python -m unittest discover -s .github/template-tests -v
+      - if: github.repository == 'maieuticus/t0003-ai-project-template'
+        run: python -m unittest discover -s .github/template-tests -v
