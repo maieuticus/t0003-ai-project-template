@@ -16,6 +16,8 @@ _Offen. Wird nach der freien Projektbeschreibung ergänzt._
 ## Anforderungen und Erfolgskriterien
 
 _Offen. Detaillierte Anforderungen entstehen im gewählten SDD-Workflow (siehe `config/project.yaml`)._
+Bei wesentlichen aus Rohmaterial übernommenen Anforderungen genügt ein Verweis auf die jeweilige
+Quelldatei in [references/](references/README.md).
 
 ## Architektur
 

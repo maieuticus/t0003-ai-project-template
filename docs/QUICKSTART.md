@@ -10,7 +10,16 @@ geprüft wurden; Grenzen stehen am Ende.
    Voraussetzung: Git und Python 3.11+. Docker wird nicht benötigt.
 3. Optional in `config/project.yaml` den Projektnamen eintragen.
 
-## 2. Agent starten
+## 2. Einstieg wählen und Agent starten
+
+**Weg A – Neue Projektidee:** Beschreibe deine Idee direkt im Dialog mit dem Agenten. Ohne
+Rohmaterial läuft der bisherige Ideen-Dialog unverändert.
+
+**Weg B – Vorhandene Projektunterlagen:** Erstelle das Projekt wie in Abschnitt 1, lege geeignete
+Unterlagen in [docs/references/](references/README.md) ab und starte dann den Agenten. Lass ihn
+die Unterlagen auswerten, kläre offene Fragen und Widersprüche und bestätige wesentliche
+Entscheidungen. Daraus entwickelt ihr das verbindliche [DV-Konzept](DV_KONZEPT.md).
+Rohmaterial bleibt unverbindlich; beachte die Datenschutz- und Sicherheitshinweise im Ordner.
 
 Du installierst und startest den Agenten selbst. Das Template installiert nichts und startet
 keinen Agenten automatisch.
@@ -23,7 +32,9 @@ keinen Agenten automatisch.
 
 ## 3. Idee → SDD-Wahl → Architektur
 
-1. Beschreibe deine Projektidee frei.
+Beide Einstiegswege münden in denselben bestehenden Prozess:
+
+1. Beschreibe deine Projektidee frei oder besprich die ausgewerteten Unterlagen mit dem Agenten.
 2. Der Agent klärt Anforderungen und empfiehlt Spec Kit oder OpenSpec. Bestätige.
 3. Der Agent führt `python scripts/sdd.py select speckit|openspec` aus. Details:
    [SDD_QUICKSTART.md](SDD_QUICKSTART.md).

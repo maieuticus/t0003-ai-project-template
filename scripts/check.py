@@ -44,6 +44,8 @@ def validate(root: Path) -> list[str]:
     errors = [f"{name}: Pflichtdatei fehlt" for name in REQUIRED if not (root / name).is_file()]
     for path in candidates(root):
         relative = path.relative_to(root)
+        if relative.parts[:2] == ("docs", "references") and relative.as_posix() != "docs/references/README.md":
+            continue
         if relative.parts[0] in {".specify", "openspec", ".github"} and relative.suffix == ".md":
             continue
         try:
