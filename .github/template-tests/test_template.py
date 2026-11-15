@@ -105,6 +105,29 @@ class NeutralProject(unittest.TestCase):
         self.assertIn("Aktueller Stand", status)
         self.assertIn("noch nicht gewählt", status)
 
+    def test_reference_material_is_copied_and_not_validated_or_modified(self):
+        project = copy_template(Path(self.temp.name) / "references")
+        references = project / "docs/references"
+        self.assertTrue((references / "README.md").is_file())
+        self.assertEqual({p.name for p in references.iterdir()}, {"README.md"})
+        originals = {
+            "idee.md": "# Idee\nDie Anwendung muss offline funktionieren.\n[Quelle](nicht-vorhanden.md)\n",
+            "anforderungen.md": "# Anforderungen\nDie Anwendung benötigt stets eine Internetverbindung.\n",
+            "export.json": "unvollständiges Rohmaterial",
+        }
+        for name, content in originals.items():
+            (references / name).write_text(content, encoding="utf-8")
+        concept = (project / "docs/DV_KONZEPT.md").read_bytes()
+        run(project, "scripts/check.py", check=True)
+        self.assertEqual((project / "docs/DV_KONZEPT.md").read_bytes(), concept)
+        for name, content in originals.items():
+            self.assertEqual((references / name).read_text(encoding="utf-8"), content)
+
+        (references / "README.md").write_text("[kaputt](fehlt.md)\n", encoding="utf-8")
+        result = run(project, "scripts/check.py")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("docs/references/README.md: Linkziel fehlt", result.stderr)
+
     def test_check_detects_broken_link_and_missing_file(self):
         broken = copy_template(Path(self.temp.name) / "broken")
         (broken / "docs/PROJECT_HANDOFF.md").write_text("# x\n[kaputt](gibt-es-nicht.md)\n", encoding="utf-8")
@@ -255,8 +278,14 @@ class SelectSdd(unittest.TestCase):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
         project = copy_template(Path(temp.name) / "project")
+        sources = {
+            "docs/references/idee.md": b"Offline operation is required.\n",
+            "docs/references/anforderungen.md": b"An internet connection is always required.\n",
+        }
+        for name, content in sources.items():
+            (project / name).write_bytes(content)
         protected = {name: (project / name).read_bytes() for name in
-                     ("AGENTS.md", ".github/copilot-instructions.md", "README.md")}
+                     ("AGENTS.md", ".github/copilot-instructions.md", "README.md", *sources)}
         run(project, "scripts/sdd.py", "select", tool, *extra, check=True)
         for name, content in protected.items():
             self.assertEqual((project / name).read_bytes(), content, f"{name} wurde überschrieben")

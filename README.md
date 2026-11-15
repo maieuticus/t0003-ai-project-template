@@ -5,7 +5,8 @@
 
 ## Einstieg
 
-1. Beschreibe deine Projektidee frei in einer Sitzung mit deinem KI-Agenten.
+1. Beschreibe deine Projektidee frei in einer Sitzung mit deinem KI-Agenten oder lege vorhandene
+   Unterlagen in [docs/references/](docs/references/README.md) ab.
 2. Der Agent klärt Anforderungen, empfiehlt ein SDD-Werkzeug (Spec Kit oder OpenSpec) und
    schlägt eine Architektur vor. Du gibst beides frei.
 3. Danach richtet der Agent nur das Nötige ein.
@@ -18,6 +19,7 @@ Kurzanleitung: [docs/QUICKSTART.md](docs/QUICKSTART.md) · SDD-Wahl:
 | Datei | Zweck |
 |---|---|
 | [AGENTS.md](AGENTS.md) | Arbeitsregeln für alle KI-Agenten |
+| [docs/references/](docs/references/README.md) | optionales, unverbindliches Rohmaterial |
 | [docs/DV_KONZEPT.md](docs/DV_KONZEPT.md) | verbindliche Projektbeschreibung und Architektur |
 | [docs/PROJECT_HANDOFF.md](docs/PROJECT_HANDOFF.md) | aktueller Arbeitsstand für die Übergabe |
 | [config/project.yaml](config/project.yaml) | Projekt-, Template- und SDD-Metadaten |
