@@ -15,20 +15,20 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
   - Projektcheck nimmt Originalmaterial von Syntax- und Linkprüfung aus; die Ordner-README bleibt geprüft.
   - Template-Kopie mit widersprüchlichen Markdown-Quellen geprüft; die Originale und das
     DV-Konzept bleiben unverändert. Spec-Kit- und OpenSpec-Tests schützen die Quelldateien.
-- Offen: menschliches Review, Freigabe und gegebenenfalls PR sowie Linux-/Windows-CI.
-- Blocker: keine
+- Offen: menschliches Review und Freigabe für PR #6; CI nach Windows-Testkorrektur erneut prüfen.
+- Blocker: Windows-CI meldete einen plattformabhängigen Pfadvergleich im neuen Test; erneute CI ausstehend.
 - Letzte lokale Prüfergebnisse: `python scripts/check.py` und
   `python -m unittest discover -s .github/template-tests -v` erfolgreich (19 Tests, Linux).
-  Gitleaks und GitHub Actions nicht ausgeführt; Windows nicht lokal geprüft.
+  GitHub Actions: Linux und Gitleaks erfolgreich; Windows nach Testkorrektur erneut ausstehend.
 - Dialogsimulation: `idee.md` verlangt Offline-Betrieb, `anforderungen.md` eine permanente
   Internetverbindung. Der Widerspruch bleibt offen; zu klären ist, welche Betriebsweise in welchen
   Situationen gelten soll. Keine bestätigte Entscheidung und keine Übernahme ins DV-Konzept.
   Dies ist ein manueller Szenariodurchlauf, kein interaktiver Agenten-E2E-Test.
-- Synchronisierung: siehe Git; PR noch offen.
+- Synchronisierung: siehe Git; PR #6 offen.
 
 ## Nächster Schritt
 
-Änderungen und Dialogverhalten menschlich prüfen; erst nach Freigabe PR und CI veranlassen.
+CI-Ergebnis und Dialogverhalten prüfen; menschliches Review-Gate vor Merge beachten.
 
 ## Entscheidungen und Quellen
 

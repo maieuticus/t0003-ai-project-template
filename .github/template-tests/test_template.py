@@ -126,7 +126,7 @@ class NeutralProject(unittest.TestCase):
         (references / "README.md").write_text("[kaputt](fehlt.md)\n", encoding="utf-8")
         result = run(project, "scripts/check.py")
         self.assertEqual(result.returncode, 1)
-        self.assertIn("docs/references/README.md: Linkziel fehlt", result.stderr)
+        self.assertIn("docs/references/README.md: Linkziel fehlt", result.stderr.replace("\\", "/"))
 
     def test_check_detects_broken_link_and_missing_file(self):
         broken = copy_template(Path(self.temp.name) / "broken")
