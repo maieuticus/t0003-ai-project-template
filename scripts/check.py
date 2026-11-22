@@ -9,9 +9,10 @@ import re
 import shutil
 import subprocess
 import sys
-from urllib.parse import unquote
+from urllib.parse import unquote, urlsplit
 
 import projectcfg
+import diagrams
 
 SKIP_DIRS = {".git", ".venv", "node_modules", ".artifacts", "__pycache__", "target", "dist", "build", "exports", "backups"}
 REQUIRED = (
@@ -60,9 +61,10 @@ def validate(root: Path) -> list[str]:
             elif path.suffix == ".md":
                 prose = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
                 for target in re.findall(r"\[[^\]]*\]\(([^)\s]+)\)", prose):
-                    if re.match(r"^[a-zA-Z][\w+.-]*:", target):
+                    parsed = urlsplit(target)
+                    if parsed.scheme or parsed.netloc:
                         continue
-                    name, _, fragment = unquote(target).partition("#")
+                    name, fragment = unquote(parsed.path), unquote(parsed.fragment)
                     dest = (path.parent / name).resolve() if name else path
                     if not dest.exists():
                         errors.append(f"{relative}: Linkziel fehlt: {target}")
@@ -88,6 +90,7 @@ def validate(root: Path) -> list[str]:
             projectcfg.checks(text)
         except (ValueError, json.JSONDecodeError) as error:
             errors.append(str(error))
+    errors.extend(diagrams.check(root))
     return errors
 
 

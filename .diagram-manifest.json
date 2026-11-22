@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "tools": {
+    "mermaid_cli": "12.2.0",
+    "sharp_cli": "6.1.0"
+  },
+  "sources": {
+    "docs/diagrams/diagram-pipeline.mmd": {
+      "sha256": "974c104bfad9fae6021e0903f675f0ad83235cd98e1f820345e8b8fbd8cd73d7",
+      "outputs": {
+        "docs/diagrams/diagram-pipeline.png": "67675ef81cf3fbc3e1b232f91e93b4f357f58ef30d948344cfd2d64509ec9684",
+        "docs/diagrams/diagram-pipeline.svg": "ee53e24469aabc135b3f318931503e0263528eb4b3bceff02c1ecf063686b868"
+      }
+    }
+  }
+}

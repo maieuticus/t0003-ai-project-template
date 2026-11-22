@@ -22,6 +22,7 @@ Kurzanleitung: [docs/QUICKSTART.md](docs/QUICKSTART.md) · SDD-Wahl:
 | [docs/references/](docs/references/README.md) | optionales, unverbindliches Rohmaterial |
 | [docs/DV_KONZEPT.md](docs/DV_KONZEPT.md) | verbindliche Projektbeschreibung und Architektur |
 | [docs/PROJECT_HANDOFF.md](docs/PROJECT_HANDOFF.md) | aktueller Arbeitsstand für die Übergabe |
+| [docs/DIAGRAMS.md](docs/DIAGRAMS.md) | Regeln, Erstellung und Prüfung von Grafiken |
 | [config/project.yaml](config/project.yaml) | Projekt-, Template- und SDD-Metadaten |
 | [CHANGELOG.md](CHANGELOG.md) | Änderungen des Templates |
 
