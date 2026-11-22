@@ -48,6 +48,14 @@ Methodik, proportional zum Umfang: Anforderungen → Klärung → Plan → Aufga
 nicht abkürzen. Kleine Korrekturen brauchen nur den ihrem Umfang angemessenen Prozess.
 Die Slash-Commands unterscheiden sich je Agent und Werkzeug; Details in `docs/SDD_QUICKSTART.md`.
 
+  ## Grafiken und Diagramme
+
+  - Markdown-Dokumentation bettet standardmäßig PNG mit aussagekräftigem Alt-Text und anklickbarer
+    Großansicht ein; relative Pfade und erläuternder Text bleiben erhalten.
+  - Mermaid wird nur in `.mmd` bearbeitet. SVG-Quelldiagramme bleiben SVG-Quellen; PNGs werden daraus
+    erzeugt. Generierte Dateien nicht unabhängig manuell pflegen.
+  - Quellen, lokale Befehle, Prüfliste und Beispiel stehen in [`docs/DIAGRAMS.md`](docs/DIAGRAMS.md).
+
 ## Autonomie und Gates
 
 - **Ohne Rückfrage:** beauftragte Änderungen im Arbeitsbaum, Projekt-Setup, Tests, Korrekturen,

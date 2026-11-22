@@ -6,29 +6,26 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 
 ## Aktueller Stand
 
-- Stand: 2026-11-15
-- Branch/Basis: `feature/references-dv-konzept` / `4319e05` (aktueller Commit: siehe Git)
-- Aktive Aufgabe: optionales Rohmaterial als Grundlage des Ideen-Dialogs integrieren.
+- Stand: 2026-11-22
+- Branch/Basis: `main` / `17ed6c7`; die aktuelle Änderung ist noch nicht committet.
+- Aktive Aufgabe: Issue #7 – PNG-first-Standard und lokale Diagrammprüfungen ergänzen.
 - Erledigt:
-  - `docs/references/` als unverbindlichen Eingangsbereich und beide Einstiegswege dokumentiert.
-  - Agentenregeln für Auswertung, Quellen, Freigaben, Datenschutz und Schutz der Originale ergänzt.
-  - Projektcheck nimmt Originalmaterial von Syntax- und Linkprüfung aus; die Ordner-README bleibt geprüft.
-  - Template-Kopie mit widersprüchlichen Markdown-Quellen geprüft; die Originale und das
-    DV-Konzept bleiben unverändert. Spec-Kit- und OpenSpec-Tests schützen die Quelldateien.
-- Offen: menschliches Review und Freigabe für PR #6; CI nach Windows-Testkorrektur erneut prüfen.
-- Blocker: Windows-CI meldete einen plattformabhängigen Pfadvergleich im neuen Test; erneute CI ausstehend.
-- Letzte lokale Prüfergebnisse: `python scripts/check.py` und
-  `python -m unittest discover -s .github/template-tests -v` erfolgreich (19 Tests, Linux).
-  GitHub Actions: Linux und Gitleaks erfolgreich; Windows nach Testkorrektur erneut ausstehend.
-- Dialogsimulation: `idee.md` verlangt Offline-Betrieb, `anforderungen.md` eine permanente
-  Internetverbindung. Der Widerspruch bleibt offen; zu klären ist, welche Betriebsweise in welchen
-  Situationen gelten soll. Keine bestätigte Entscheidung und keine Übernahme ins DV-Konzept.
-  Dies ist ein manueller Szenariodurchlauf, kein interaktiver Agenten-E2E-Test.
-- Synchronisierung: siehe Git; PR #6 offen.
+  - Issue #7 umgesetzt: Standard und Beispiele in `docs/DIAGRAMS.md`, Arbeitsregel in `AGENTS.md`.
+  - `scripts/diagrams.py` erzeugt Mermaid-PNGs und optionale SVGs sowie PNGs aus SVG-Quellen;
+    der Projektcheck prüft Quellen, Ausgaben, Alt-Texte und anklickbare Großansichten offline.
+  - Mermaid-Beispiel und generierte PNG-/SVG-Ausgaben lokal erstellt und wiederholt geprüft.
+  - PR #6 ist gemergt; die vorherige Handoff-Angabe „offen“ war veraltet.
+- Offen: Feature-Branch, Commit, Push und PR-Erstellung; vom Benutzer freigegeben, noch nicht ausgeführt.
+- Blocker: keiner. Windows-CI wurde für diese Änderung noch nicht ausgeführt.
+- Letzte lokale Prüfergebnisse (Ubuntu 24.04): `python scripts/check.py` erfolgreich;
+  Template-Tests 21 erfolgreich, 3 netzwerkabhängige SDD-Tests übersprungen;
+  `python scripts/diagrams.py build --svg` und anschließender Check erfolgreich.
+- Synchronisierung: Issue #7 offen; lokale Änderungen sind nicht committet.
 
 ## Nächster Schritt
 
-CI-Ergebnis und Dialogverhalten prüfen; menschliches Review-Gate vor Merge beachten.
+Freigegebene Änderungen auf einem Feature-Branch veröffentlichen; kein Merge oder Release ohne
+separate Freigabe.
 
 ## Entscheidungen und Quellen
 

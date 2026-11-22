@@ -6,6 +6,9 @@ Projektstruktur, Adapter, CI, Sicherheit, Breaking Changes, Migrationshinweise.
 
 ## Unveröffentlicht
 
+### Projektstruktur
+- PNG-first-Standard für Dokumentationsgrafiken mit lokalen Erzeugungs- und Konsistenzprüfungen.
+
 ### CI
 - Projektchecks laufen weiterhin unter Linux und Windows; die Template-Regressionstests mit
   Neutralitätsannahmen laufen in GitHub Actions nur im t0003-Ursprungsrepository.

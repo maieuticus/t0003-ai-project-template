@@ -16,6 +16,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 import projectcfg  # noqa: E402
+import diagrams  # noqa: E402
 
 OFFLINE = os.environ.get("TEMPLATE_TEST_OFFLINE") == "1"
 FORBIDDEN_NEUTRAL = (".specify", "openspec", ".devcontainer", "templates", "profiles", "src", "IMPLEMENTIERUNGSVORGABE.md")
@@ -101,9 +102,76 @@ class NeutralProject(unittest.TestCase):
 
     def test_check_and_status_work_without_generator(self):
         run(self.project, "scripts/check.py", check=True)
+        run(self.project, "scripts/diagrams.py", "check", check=True)
         status = run(self.project, "scripts/status.py", check=True).stdout
         self.assertIn("Aktueller Stand", status)
         self.assertIn("noch nicht gewählt", status)
+
+    def test_diagram_check_detects_stale_sources_and_outputs(self):
+        project = copy_template(Path(self.temp.name) / "stale-diagram")
+        source = project / "docs/diagrams/diagram-pipeline.mmd"
+        original = source.read_text(encoding="utf-8")
+        source.write_text(original + "\n", encoding="utf-8")
+        result = run(project, "scripts/diagrams.py", "check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("Quelle seit dem letzten Diagramm-Build geändert", result.stderr)
+
+        source.write_text(original, encoding="utf-8")
+        image = project / "docs/diagrams/diagram-pipeline.png"
+        original_image = image.read_bytes()
+        image.write_bytes(original_image + b"changed")
+        result = run(project, "scripts/diagrams.py", "check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("Ausgabe seit dem letzten Diagramm-Build geändert", result.stderr)
+
+        image.write_bytes(original_image)
+        image.unlink()
+        result = run(project, "scripts/diagrams.py", "check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("Ausgabe fehlt", result.stderr)
+
+    def test_diagram_check_requires_alt_text(self):
+        project = copy_template(Path(self.temp.name) / "diagram-alt")
+        markdown = project / "docs/DIAGRAMS.md"
+        text = markdown.read_text(encoding="utf-8")
+        markdown.write_text(text.replace(
+            "![Diagramm-Pipeline: Mermaid-Quelle wird lokal zu PNG und optional SVG gerendert]",
+            "![]",
+        ), encoding="utf-8")
+        result = run(project, "scripts/diagrams.py", "check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("Diagramm-PNG ohne Alt-Text", result.stderr)
+
+    def test_diagram_check_requires_clickable_zoom(self):
+        project = copy_template(Path(self.temp.name) / "diagram-zoom")
+        markdown = project / "docs/DIAGRAMS.md"
+        text = markdown.read_text(encoding="utf-8")
+        embedded = (
+            "[![Diagramm-Pipeline: Mermaid-Quelle wird lokal zu PNG und optional SVG gerendert]"
+            "(diagrams/diagram-pipeline.png)](diagrams/diagram-pipeline.png?raw=1)"
+        )
+        replacement = (
+            "![Diagramm-Pipeline: Mermaid-Quelle wird lokal zu PNG und optional SVG gerendert]"
+            "(diagrams/diagram-pipeline.png)"
+        )
+        self.assertIn(embedded, text)
+        markdown.write_text(text.replace(embedded, replacement), encoding="utf-8")
+        result = run(project, "scripts/diagrams.py", "check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("anklickbare PNG-Großansicht", result.stderr)
+
+    def test_no_diagram_sources_need_no_renderer_or_version_pins(self):
+        with tempfile.TemporaryDirectory() as temp:
+            self.assertEqual(diagrams.check(Path(temp)), [])
+
+    def test_diagram_source_discovery_distinguishes_authored_svg(self):
+        project = copy_template(Path(self.temp.name) / "diagram-sources")
+        authored_svg = project / "docs/diagrams/authored.svg"
+        authored_svg.write_text("<svg></svg>\n", encoding="utf-8")
+        found = {path.relative_to(project).as_posix() for path in diagrams.sources(project)}
+        self.assertIn("docs/diagrams/diagram-pipeline.mmd", found)
+        self.assertNotIn("docs/diagrams/diagram-pipeline.svg", found)
+        self.assertIn("docs/diagrams/authored.svg", found)
 
     def test_reference_material_is_copied_and_not_validated_or_modified(self):
         project = copy_template(Path(self.temp.name) / "references")
