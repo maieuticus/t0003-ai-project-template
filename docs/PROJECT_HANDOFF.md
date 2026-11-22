@@ -7,7 +7,7 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 ## Aktueller Stand
 
 - Stand: 2026-11-22
-- Branch/Basis: `main` / `17ed6c7`; die aktuelle Änderung ist noch nicht committet.
+- Branch/Basis: `feature/png-first-diagram-standard` / `17ed6c7`; PR #8 ist offen.
 - Aktive Aufgabe: Issue #7 – PNG-first-Standard und lokale Diagrammprüfungen ergänzen.
 - Erledigt:
   - Issue #7 umgesetzt: Standard und Beispiele in `docs/DIAGRAMS.md`, Arbeitsregel in `AGENTS.md`.
@@ -15,17 +15,16 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
     der Projektcheck prüft Quellen, Ausgaben, Alt-Texte und anklickbare Großansichten offline.
   - Mermaid-Beispiel und generierte PNG-/SVG-Ausgaben lokal erstellt und wiederholt geprüft.
   - PR #6 ist gemergt; die vorherige Handoff-Angabe „offen“ war veraltet.
-- Offen: Feature-Branch, Commit, Push und PR-Erstellung; vom Benutzer freigegeben, noch nicht ausgeführt.
-- Blocker: keiner. Windows-CI wurde für diese Änderung noch nicht ausgeführt.
+- Offen: Review und CI für PR #8; menschliches Review-Gate für die Änderung ist bestanden.
+- Blocker: keiner. GitHub Actions für Linux, Windows und Gitleaks laufen noch.
 - Letzte lokale Prüfergebnisse (Ubuntu 24.04): `python scripts/check.py` erfolgreich;
   Template-Tests 21 erfolgreich, 3 netzwerkabhängige SDD-Tests übersprungen;
   `python scripts/diagrams.py build --svg` und anschließender Check erfolgreich.
-- Synchronisierung: Issue #7 offen; lokale Änderungen sind nicht committet.
+- Synchronisierung: Issue #7 wird durch PR #8 adressiert; Feature-Branch ist gepusht.
 
 ## Nächster Schritt
 
-Freigegebene Änderungen auf einem Feature-Branch veröffentlichen; kein Merge oder Release ohne
-separate Freigabe.
+CI und PR-Review abwarten; kein Merge oder Release ohne separate Freigabe.
 
 ## Entscheidungen und Quellen
 
