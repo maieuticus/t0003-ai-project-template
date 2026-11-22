@@ -15,8 +15,8 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
     der Projektcheck prüft Quellen, Ausgaben, Alt-Texte und anklickbare Großansichten offline.
   - Mermaid-Beispiel und generierte PNG-/SVG-Ausgaben lokal erstellt und wiederholt geprüft.
   - PR #6 ist gemergt; die vorherige Handoff-Angabe „offen“ war veraltet.
-- Offen: Review und CI für PR #8; menschliches Review-Gate für die Änderung ist bestanden.
-- Blocker: keiner. GitHub Actions für Linux, Windows und Gitleaks laufen noch.
+- Offen: PR #8 wartet auf das Repository-Review und Merge.
+- Blocker: keiner. GitHub Actions für Linux, Windows und Gitleaks sind erfolgreich.
 - Letzte lokale Prüfergebnisse (Ubuntu 24.04): `python scripts/check.py` erfolgreich;
   Template-Tests 21 erfolgreich, 3 netzwerkabhängige SDD-Tests übersprungen;
   `python scripts/diagrams.py build --svg` und anschließender Check erfolgreich.
@@ -24,7 +24,8 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 
 ## Nächster Schritt
 
-CI und PR-Review abwarten; kein Merge oder Release ohne separate Freigabe.
+PR #8 nach dem Repository-Review mergen; danach t0004 erst nach dem t0003-Release synchronisieren.
+Merge und Release brauchen eine separate Freigabe.
 
 ## Entscheidungen und Quellen
 
