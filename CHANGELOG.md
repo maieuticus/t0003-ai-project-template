@@ -8,15 +8,22 @@ Projektstruktur, Adapter, CI, Sicherheit, Breaking Changes, Migrationshinweise.
 
 ### Projektstruktur
 - PNG-first-Standard für Dokumentationsgrafiken mit lokalen Erzeugungs- und Konsistenzprüfungen.
+- Branch-Strategie, Pull-Request-Regeln und Einschränkungen der manuellen GitHub-Ersteinrichtung
+  in `docs/BRANCHING.md`; Agentenregeln verweisen auf diese zentrale Quelle.
 
 ### CI
 - Projektchecks laufen weiterhin unter Linux und Windows; die Template-Regressionstests mit
   Neutralitätsannahmen laufen in GitHub Actions nur im t0003-Ursprungsrepository.
 - Ein synthetisches Projekt mit `src/` und einem Python-Check prüft Erfolg und Fehlerweitergabe.
+- Wöchentlicher, manueller und Release-getriggerter Branch-Audit mit Actions-Zusammenfassung;
+  ausschließlich lesende GitHub-Berechtigungen, keine automatische Löschung.
+- Branch-Audit-Tests schützen Standard-, geschützte und aktive Branches vor Löschungsempfehlungen.
 
 ### Migrationshinweise
 - Kein Release oder Änderung der Template-Version. t0004 unterstützt derzeit nur t0003 0.1.0;
   eine spätere neue Version und ihre Kompatibilität müssen gesondert abgestimmt werden.
+- t0004 bleibt unverändert und netzwerkfrei. Automatische Anlage zusätzlicher GitHub-Branches
+  und Schutzregeln ist nicht Bestandteil dieses Audit-only-Umfangs.
 
 ## [0.1.0] – 2026-10-30
 

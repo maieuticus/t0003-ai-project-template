@@ -70,6 +70,19 @@ Die Slash-Commands unterscheiden sich je Agent und Werkzeug; Details in `docs/SD
   überschreiben; kein hartes `git reset`.
 - Nicht eigenmächtig pushen. Offene Synchronisierung im Handoff ausweisen.
 
+## Branching und Bereinigung
+
+- Entwicklungsweg, Schutzregeln und Audit-Grenzen stehen zentral in
+  [`docs/BRANCHING.md`](docs/BRANCHING.md); Branch-Änderungen daran ausrichten.
+- Niemals `main`, `test` oder `development` löschen. Branches nur über Pull Requests und
+  erforderliche CI-Prüfungen ändern.
+- Der regelmäßige Branch-Audit ist rein lesend und empfiehlt höchstens eine Prüfung oder
+  Löschung. Eine Löschung braucht immer eine ausdrückliche Freigabe; niemals Schutzregeln
+  umgehen.
+- Die Template-Kopie bzw. der aktuelle t0004-Generator richtet Remote-Branches und GitHub-
+  Schutzregeln nicht automatisch ein. Diese Ersteinrichtung ist in der Branch-Dokumentation
+  als manuelle Repository-Admin-Aufgabe beschrieben.
+
 ## Status und nächster Schritt
 
 - Zeige nach Meilensteinen, Übergängen, Blockaden und vor Freigaben eine knappe Tabelle

@@ -33,6 +33,13 @@ python scripts/check.py        # Dokumente, Pflichtdateien, projektspezifische P
 python scripts/status.py       # dokumentierten Arbeitsstand anzeigen
 ```
 
+## Branching
+
+Der Entwicklungsweg, die manuellen GitHub-Schutzregeln und der nur lesende Branch-Audit sind
+in [docs/BRANCHING.md](docs/BRANCHING.md) beschrieben. Der Audit löscht nichts. Zusätzliche
+Remote-Branches und Schutzregeln müssen derzeit durch eine Repository-Administration eingerichtet
+werden; siehe die Einschränkungen des aktuellen Generators in diesem Dokument.
+
 ## Secret-Schutz einrichten
 
 Neue Projekte erhalten die Gitleaks-Konfiguration und den
