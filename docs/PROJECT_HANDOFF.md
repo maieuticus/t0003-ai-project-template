@@ -7,7 +7,7 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 ## Aktueller Stand
 
 - Stand: 2026-11-23
-- Branch/Basis: `main` / `8ee48ed`; Änderungen am Branch-Audit sind lokal und nicht committet.
+- Branch/Basis: `feature/branch-audit-template` / `aa7f013`; PR #10 ist offen.
 - Aktive Aufgabe: Branch-Strategie und rein lesenden Branch-Audit in t0003 verankern.
 - Erledigt:
   - Issue #7 umgesetzt: Standard und Beispiele in `docs/DIAGRAMS.md`, Arbeitsregel in `AGENTS.md`.
@@ -22,14 +22,15 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
   offene Anforderung für einen gesondert freizugebenden Provisionierungsweg.
 - Letzte lokale Prüfergebnisse: `python scripts/check.py` erfolgreich; Template-Tests 29
   bestanden, 3 netzwerkabhängige SDD-Tests übersprungen (32 insgesamt); `git diff --check` und
-  Python-Syntaxprüfung erfolgreich. GitHub Actions wurden für diese Änderungen noch nicht ausgeführt.
-- Synchronisierung: Änderungen sind nur lokal; kein Commit, Push, Release oder produktives
-  Repository wurde verändert.
+  Python-Syntaxprüfung erfolgreich. GitHub Actions für Linux, Windows und Gitleaks sind in PR #10
+  erfolgreich.
+- Synchronisierung: Branch ist gepusht und PR #10 offen. Kein Release und keine Änderung an
+  produktiven Projekt-Repositories.
 
 ## Nächster Schritt
 
-Änderungen in t0003 prüfen und anschließend mit ausdrücklicher Freigabe als PR veröffentlichen.
-Commit, Push und PR-Erstellung brauchen eine separate Freigabe.
+PR #10 reviewen und nach ausdrücklicher Freigabe mergen. Merge und Release brauchen eine separate
+Freigabe.
 
 ## Entscheidungen und Quellen
 
