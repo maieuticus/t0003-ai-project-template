@@ -6,26 +6,31 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 
 ## Aktueller Stand
 
-- Stand: 2026-11-22
-- Branch/Basis: `feature/png-first-diagram-standard` / `17ed6c7`; PR #8 ist offen.
-- Aktive Aufgabe: Issue #7 – PNG-first-Standard und lokale Diagrammprüfungen ergänzen.
+- Stand: 2026-11-23
+- Branch/Basis: `feature/branch-audit-template`; PR #10 ist offen.
+- Aktive Aufgabe: Branch-Strategie und rein lesenden Branch-Audit in t0003 verankern.
 - Erledigt:
   - Issue #7 umgesetzt: Standard und Beispiele in `docs/DIAGRAMS.md`, Arbeitsregel in `AGENTS.md`.
   - `scripts/diagrams.py` erzeugt Mermaid-PNGs und optionale SVGs sowie PNGs aus SVG-Quellen;
     der Projektcheck prüft Quellen, Ausgaben, Alt-Texte und anklickbare Großansichten offline.
   - Mermaid-Beispiel und generierte PNG-/SVG-Ausgaben lokal erstellt und wiederholt geprüft.
-  - PR #6 ist gemergt; die vorherige Handoff-Angabe „offen“ war veraltet.
-- Offen: PR #8 wartet auf das Repository-Review und Merge.
-- Blocker: keiner. GitHub Actions für Linux, Windows und Gitleaks sind erfolgreich.
-- Letzte lokale Prüfergebnisse (Ubuntu 24.04): `python scripts/check.py` erfolgreich;
-  Template-Tests 21 erfolgreich, 3 netzwerkabhängige SDD-Tests übersprungen;
-  `python scripts/diagrams.py build --svg` und anschließender Check erfolgreich.
-- Synchronisierung: Issue #7 wird durch PR #8 adressiert; Feature-Branch ist gepusht.
+  - PR #6 und PR #8 sind gemergt; die vorherige Angabe, PR #8 sei offen, war veraltet.
+  - Branch-Audit implementiert als read-only API-Bericht mit Wochen-, manuellem und Release-Trigger.
+- Offen: Automatische Anlage zusätzlicher GitHub-Branches und Schutzregeln ist nicht enthalten;
+  t0004 bleibt gemäß bestätigtem Audit-only-Umfang netzwerkfrei.
+- Blocker: Keine technische Blockade. Die ausgeschlossene Remote-Ersteinrichtung bleibt eine
+  offene Anforderung für einen gesondert freizugebenden Provisionierungsweg.
+- Letzte lokale Prüfergebnisse: `python scripts/check.py` erfolgreich; Template-Tests 29
+  bestanden, 3 netzwerkabhängige SDD-Tests übersprungen (32 insgesamt); `git diff --check` und
+  Python-Syntaxprüfung erfolgreich. GitHub Actions für Linux, Windows und Gitleaks sind in PR #10
+  erfolgreich.
+- Synchronisierung: Branch ist gepusht und PR #10 offen. Kein Release und keine Änderung an
+  produktiven Projekt-Repositories.
 
 ## Nächster Schritt
 
-PR #8 nach dem Repository-Review mergen; danach t0004 erst nach dem t0003-Release synchronisieren.
-Merge und Release brauchen eine separate Freigabe.
+PR #10 reviewen und nach ausdrücklicher Freigabe mergen. Merge und Release brauchen eine separate
+Freigabe.
 
 ## Entscheidungen und Quellen
 
@@ -33,5 +38,6 @@ Verweise auf verbindliche Entscheidungen (DV-Konzept, Specs). Hier nichts neu en
 
 ## Probleme
 
-t0004 unterstützt derzeit nur t0003 0.1.0. Neue Template-Version und Kompatibilitätserweiterung
-müssen gesondert abgestimmt werden; kein Release im Rahmen dieser Änderung.
+t0004 unterstützt derzeit nur t0003 0.1.0 und erstellt keine GitHub-Repositories oder Remote-
+Branches. Neue Template-Version und Kompatibilitätserweiterungen müssen gesondert abgestimmt
+werden; kein Release im Rahmen dieser Änderung.

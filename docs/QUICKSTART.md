@@ -10,6 +10,10 @@ geprüft wurden; Grenzen stehen am Ende.
    Voraussetzung: Git und Python 3.11+. Docker wird nicht benötigt.
 3. Optional in `config/project.yaml` den Projektnamen eintragen.
 
+Branch-Modell und GitHub-Schutzregeln: [BRANCHING.md](BRANCHING.md). Die Standard-Branches
+`development` und `test` sowie Schutzregeln müssen derzeit manuell durch eine Repository-
+Administration eingerichtet werden.
+
 ## 2. Einstieg wählen und Agent starten
 
 **Weg A – Neue Projektidee:** Beschreibe deine Idee direkt im Dialog mit dem Agenten. Ohne
