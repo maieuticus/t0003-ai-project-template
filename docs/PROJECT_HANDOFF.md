@@ -7,8 +7,9 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 ## Aktueller Stand
 
 - Stand: 2026-11-23
-- Branch/Basis: `feature/branch-audit-template`; PR #10 ist offen.
-- Aktive Aufgabe: Branch-Strategie und rein lesenden Branch-Audit in t0003 verankern.
+- Branch/Basis: `feature/issue-9-autocrlf-regression`, basiert auf `main` nach PR #10
+  (`d4d4426`).
+- Aktive Aufgabe: PR #11 für Issue #9 ist offen; CI ist erfolgreich, Review steht aus.
 - Erledigt:
   - Issue #7 umgesetzt: Standard und Beispiele in `docs/DIAGRAMS.md`, Arbeitsregel in `AGENTS.md`.
   - `scripts/diagrams.py` erzeugt Mermaid-PNGs und optionale SVGs sowie PNGs aus SVG-Quellen;
@@ -16,21 +17,24 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
   - Mermaid-Beispiel und generierte PNG-/SVG-Ausgaben lokal erstellt und wiederholt geprüft.
   - PR #6 und PR #8 sind gemergt; die vorherige Angabe, PR #8 sei offen, war veraltet.
   - Branch-Audit implementiert als read-only API-Bericht mit Wochen-, manuellem und Release-Trigger.
+- PR #10 (`Add read-only branch audit to template`) wurde am 2026-11-23 gemergt.
+- Issue #9: Regressionstest ergänzt, der einen isolierten Checkout mit `core.autocrlf=true`
+  prüft und die tatsächlichen `.gitattributes`-Regeln sowie SHA-256-Prüfsummen für SVG- und
+  Mermaid-Dateien in `docs/diagrams/` verifiziert.
 - Offen: Automatische Anlage zusätzlicher GitHub-Branches und Schutzregeln ist nicht enthalten;
   t0004 bleibt gemäß bestätigtem Audit-only-Umfang netzwerkfrei.
-- Blocker: Keine technische Blockade. Die ausgeschlossene Remote-Ersteinrichtung bleibt eine
-  offene Anforderung für einen gesondert freizugebenden Provisionierungsweg.
-- Letzte lokale Prüfergebnisse: `python scripts/check.py` erfolgreich; Template-Tests 29
-  bestanden, 3 netzwerkabhängige SDD-Tests übersprungen (32 insgesamt); `git diff --check` und
-  Python-Syntaxprüfung erfolgreich. GitHub Actions für Linux, Windows und Gitleaks sind in PR #10
-  erfolgreich.
-- Synchronisierung: Branch ist gepusht und PR #10 offen. Kein Release und keine Änderung an
-  produktiven Projekt-Repositories.
+- Issue #9 beschreibt fehlende Abdeckung, keinen aktuell nachgewiesenen Fehler.
+- Blocker: Keine technische Blockade. Merge braucht separate ausdrückliche Freigabe.
+- Letzte lokale Prüfergebnisse: `python scripts/check.py` und `git diff --check` erfolgreich;
+  Template-Tests 30 bestanden, 3 netzwerkabhängige SDD-Tests übersprungen (33 insgesamt).
+  Lokaler Lauf auf Linux; CI für PR #11 ist auf Ubuntu, Windows und Gitleaks erfolgreich.
+- Synchronisierung: `origin/main` ist lokal auf den Merge-Commit `d4d4426` aktualisiert.
+  Branch `feature/issue-9-autocrlf-regression` ist gepusht; PR #11 ist offen. Kein Release und
+  keine Änderung an produktiven Projekt-Repositories.
 
 ## Nächster Schritt
 
-PR #10 reviewen und nach ausdrücklicher Freigabe mergen. Merge und Release brauchen eine separate
-Freigabe.
+Review für PR #11 abwarten. Merge braucht separate ausdrückliche Freigabe.
 
 ## Entscheidungen und Quellen
 

@@ -5,6 +5,7 @@ untracked files, no .git history) into a temporary project and run it there.
 Set TEMPLATE_TEST_OFFLINE=1 to skip tests that download Spec Kit or OpenSpec.
 """
 
+import hashlib
 import os
 from pathlib import Path
 import shutil
@@ -172,6 +173,37 @@ class NeutralProject(unittest.TestCase):
         self.assertIn("docs/diagrams/diagram-pipeline.mmd", found)
         self.assertNotIn("docs/diagrams/diagram-pipeline.svg", found)
         self.assertIn("docs/diagrams/authored.svg", found)
+
+    def test_diagram_sources_keep_lf_with_autocrlf_checkout(self):
+        with tempfile.TemporaryDirectory() as temp:
+            temp_root = Path(temp)
+            source_repo = temp_root / "source"
+            source_repo.mkdir()
+            shutil.copy2(ROOT / ".gitattributes", source_repo / ".gitattributes")
+
+            source_paths = (
+                Path("docs/diagrams/diagram-pipeline.mmd"),
+                Path("docs/diagrams/diagram-pipeline.svg"),
+            )
+            expected = {}
+            for path in source_paths:
+                target = source_repo / path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                content = (ROOT / path).read_bytes()
+                self.assertNotIn(b"\r", content)
+                target.write_bytes(content)
+                expected[path] = hashlib.sha256(content).digest()
+
+            git(source_repo, "init", "-q")
+            git(source_repo, "add", ".gitattributes", "docs/diagrams")
+            git(source_repo, "commit", "-qm", "add diagram sources")
+
+            checkout = temp_root / "checkout"
+            git(temp_root, "-c", "core.autocrlf=true", "clone", "-q", str(source_repo), str(checkout))
+            for path, digest in expected.items():
+                checked_out = (checkout / path).read_bytes()
+                self.assertNotIn(b"\r", checked_out, path.as_posix())
+                self.assertEqual(hashlib.sha256(checked_out).digest(), digest, path.as_posix())
 
     def test_reference_material_is_copied_and_not_validated_or_modified(self):
         project = copy_template(Path(self.temp.name) / "references")
