@@ -7,7 +7,7 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 ## Aktueller Stand
 
 - Stand: 2026-11-23
-- Branch/Basis: `feature/branch-audit-template` / `aa7f013`; PR #10 ist offen.
+- Branch/Basis: `feature/branch-audit-template`; PR #10 ist offen.
 - Aktive Aufgabe: Branch-Strategie und rein lesenden Branch-Audit in t0003 verankern.
 - Erledigt:
   - Issue #7 umgesetzt: Standard und Beispiele in `docs/DIAGRAMS.md`, Arbeitsregel in `AGENTS.md`.
