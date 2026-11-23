@@ -9,8 +9,7 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 - Stand: 2026-11-23
 - Branch/Basis: `feature/issue-9-autocrlf-regression`, basiert auf `main` nach PR #10
   (`d4d4426`).
-- Aktive Aufgabe: Regressionstest aus Issue #9 lokal implementiert und geprüft; vor Veröffentlichung
-  stehen Review und Freigabe aus.
+- Aktive Aufgabe: PR #11 für Issue #9 ist offen; CI und Review stehen aus.
 - Erledigt:
   - Issue #7 umgesetzt: Standard und Beispiele in `docs/DIAGRAMS.md`, Arbeitsregel in `AGENTS.md`.
   - `scripts/diagrams.py` erzeugt Mermaid-PNGs und optionale SVGs sowie PNGs aus SVG-Quellen;
@@ -25,19 +24,17 @@ Secrets, Tokens oder Zugangsdaten eintragen. Git hat bei Widersprüchen Vorrang.
 - Offen: Automatische Anlage zusätzlicher GitHub-Branches und Schutzregeln ist nicht enthalten;
   t0004 bleibt gemäß bestätigtem Audit-only-Umfang netzwerkfrei.
 - Issue #9 beschreibt fehlende Abdeckung, keinen aktuell nachgewiesenen Fehler.
-- Blocker: Keine technische Blockade. Push und PR-Erstellung brauchen ausdrückliche Freigabe.
+- Blocker: Keine technische Blockade. Merge braucht separate ausdrückliche Freigabe.
 - Letzte lokale Prüfergebnisse: `python scripts/check.py` und `git diff --check` erfolgreich;
   Template-Tests 30 bestanden, 3 netzwerkabhängige SDD-Tests übersprungen (33 insgesamt).
-  Lokaler Lauf auf Linux; Windows-CI für Issue #9 steht noch aus. GitHub Actions für Linux,
-  Windows und Gitleaks waren für PR #10 erfolgreich.
+  Lokaler Lauf auf Linux; CI für PR #11 läuft auf Ubuntu, Windows und Gitleaks.
 - Synchronisierung: `origin/main` ist lokal auf den Merge-Commit `d4d4426` aktualisiert.
-  Der Arbeitsbranch ist lokal und noch nicht gepusht. Kein Release und keine Änderung an
-  produktiven Projekt-Repositories.
+  Branch `feature/issue-9-autocrlf-regression` ist gepusht; PR #11 ist offen. Kein Release und
+  keine Änderung an produktiven Projekt-Repositories.
 
 ## Nächster Schritt
 
-Änderungen reviewen und nach ausdrücklicher Freigabe per Push und PR veröffentlichen; anschließend
-die CI-Prüfung unter Ubuntu und Windows abwarten. Merge braucht separate Freigabe.
+CI-Ergebnisse und Review für PR #11 abwarten. Merge braucht separate ausdrückliche Freigabe.
 
 ## Entscheidungen und Quellen
 
